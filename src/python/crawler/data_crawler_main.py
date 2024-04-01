@@ -1,4 +1,4 @@
-from crawler.market_fetcher import FetcherStrategies, MarketFetcher
+from crawler.market_fetcher import FetcherStrategies, MarketFetcher, MarketDataType
 from crawler.strategy.TradingViewSourceStrategy import TradingViewSourceStrategy
 from crawler.strategy.YahooSourceStrategy import YahooSourceStrategy
 
@@ -13,6 +13,4 @@ def hsi():
 
 
 if __name__ == '__main__':
-    fetchers = {
-        'hsi': hsi()
-    }
+    hsi().fetch(MarketDataType.CONSTITUENTS_DAILY)

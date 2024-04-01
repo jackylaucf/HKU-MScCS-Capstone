@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from model.market_data import DailyPrice, IntradayPrice
 from typing import Callable
 
 
@@ -8,9 +9,17 @@ class SourceStrategy(ABC):
         self.ticker_formatter = ticker_formatter
 
     @abstractmethod
-    def get_price(self, tickers: [str]):
+    def get_daily_price(self, ticker: str) -> [DailyPrice]:
         pass
 
     @abstractmethod
-    def get_constituents(self):
+    def get_intraday_price(self, ticker: str) -> [IntradayPrice]:
+        pass
+
+    @abstractmethod
+    def get_constituents(self) -> [str]:
+        pass
+
+    @abstractmethod
+    def get_source_name(self) -> str:
         pass
