@@ -9,11 +9,11 @@ class SourceStrategy(ABC):
         self.ticker_formatter = ticker_formatter
 
     @abstractmethod
-    def get_daily_price(self, ticker: str) -> [DailyPrice]:
+    def get_daily_price(self, ticker: str) -> (str, [DailyPrice]):
         pass
 
     @abstractmethod
-    def get_intraday_price(self, ticker: str) -> [IntradayPrice]:
+    def get_intraday_price(self, ticker: str) -> (str, [IntradayPrice]):
         pass
 
     @abstractmethod

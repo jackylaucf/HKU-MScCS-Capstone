@@ -11,7 +11,7 @@ class YahooSourceStrategy(SourceStrategy):
     def get_source_name(self) -> str:
         return 'Yahoo Finance'
 
-    def get_daily_price(self, ticker: str) -> [DailyPrice]:
+    def get_daily_price(self, ticker: str) -> (str, [DailyPrice]):
         daily_prices = []
         if self.ticker_formatter:
             ticker = self.ticker_formatter(ticker)
@@ -34,9 +34,9 @@ class YahooSourceStrategy(SourceStrategy):
                         volume=data_values[data_header.index('Volume')]))
         except (requests.HTTPError, ValueError) as ex:
             print(f'Caught error when fetching daily price of {ticker} - [{ex}]')
-        return daily_prices
+        return ticker, daily_prices
 
-    def get_intraday_price(self, tickers: [str]) -> [IntradayPrice]:
+    def get_intraday_price(self, tickers: [str]) -> (str, [IntradayPrice]):
         raise NotImplementedError()
 
     def get_constituents(self) -> [str]:

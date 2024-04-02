@@ -1,5 +1,25 @@
-import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.common import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-req = requests.get('https://query1.finance.yahoo.com/v7/finance/download/%5EHSI?period1=536371200&period2=1711324800&interval=1d&events=history&includeAdjustedClose=true', headers=headers)
-print(req.text )
+from crawler import http_utils
+
+url = 'https://www.tradingview.com/symbols/{ticker}/components'.format(ticker='KRX-KOSDAQ')
+browser_options = Options()
+browser_options.add_argument('--headless=new')
+browser = webdriver.Chrome() #options=browser_options
+browser.get(url)
+try:
+    while button_element := browser.find_element(By.CSS_SELECTOR, "div[class^='loadMoreWrapper']"):
+        button_element.click()
+        time.sleep(3)
+except NoSuchElementException:
+    parsed_html = BeautifulSoup(browser.page_source, 'html.parser')
+    constituents = []
+    for element in parsed_html.findAll('a', {'class': 'tickerName-GrtoTeat'}):
+        constituents.append(element.text)
+    print(constituents)
+browser.close()
