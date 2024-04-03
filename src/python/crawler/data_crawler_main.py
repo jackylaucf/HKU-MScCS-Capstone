@@ -77,7 +77,7 @@ def ftse_sti():
                                    constituents=TradingViewSourceStrategy('FTSEST-STI'),
                                    constituents_price=YahooSourceStrategy('^STI',
                                                                           YahooSourceStrategy.get_ticker_formatter(
-                                                                              suffix='.SI', zfill=6)))
+                                                                              suffix='.SI')))
     return MarketFetcher('ftse_sti', strategies)
 
 
@@ -90,5 +90,4 @@ def ftse_sti():
 #                                                                               suffix='.T')))
 
 if __name__ == '__main__':
-    sse_composite().fetch()
-    szse_component().fetch()
+    ftse_sti().fetch()
