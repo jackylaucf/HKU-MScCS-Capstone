@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from model.market_data import DailyPrice, IntradayPrice
-from typing import Callable
+from typing import Callable, Union
 
 
 class SourceStrategy(ABC):
-    def __init__(self, index_ticker: str, ticker_formatter: Callable[[str], str] = None):
+    def __init__(self, index_ticker: [str, None], ticker_formatter: Callable[[str], str] = None):
         self.index_ticker = index_ticker
         self.ticker_formatter = ticker_formatter
 

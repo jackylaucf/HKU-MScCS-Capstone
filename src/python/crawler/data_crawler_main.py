@@ -1,4 +1,6 @@
 from crawler.market_fetcher import FetcherStrategies, MarketFetcher, MarketDataType
+from crawler.strategy.ImportCsvSourceStrategy import ImportCsvSourceStrategy
+from crawler.strategy.NikkeiJPSourceStrategy import NikkeiJPSourceStrategy
 from crawler.strategy.TradingViewSourceStrategy import TradingViewSourceStrategy
 from crawler.strategy.YahooSourceStrategy import YahooSourceStrategy
 
@@ -52,6 +54,16 @@ def nikkei_225():
     return MarketFetcher('nikkei_225', strategies)
 
 
+def nikkei_mid_small_cap():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('jpxnkmsc',
+                                                                       '%m/%d/%Y'),
+                                   constituents=NikkeiJPSourceStrategy('jpxnkms'),
+                                   constituents_price=YahooSourceStrategy(None,
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.T')))
+    return MarketFetcher('nikkei_mid_small_cap', strategies)
+
+
 # China
 def sse_composite():
     strategies = FetcherStrategies(index_price=YahooSourceStrategy('000001.SS'),
@@ -90,4 +102,4 @@ def ftse_sti():
 #                                                                               suffix='.T')))
 
 if __name__ == '__main__':
-    ftse_sti().fetch()
+    nikkei_mid_small_cap().fetch()

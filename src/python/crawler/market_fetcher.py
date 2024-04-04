@@ -51,7 +51,7 @@ class MarketFetcher:
     def get_constituents_daily_price(self, ticker: str, save: bool = True, save_dir: str = None) -> [DailyPrice]:
         ticker, daily_price = self.strategies.constituents_price.get_daily_price(ticker)
         print(f'Fetched {len(daily_price)} {ticker} daily price(s) from '
-              f'{self.strategies.index_price.get_source_name()}')
+              f'{self.strategies.constituents_price.get_source_name()}')
         if save:
             self.export(daily_price, f'CONSTITUENTS_DAILY_{ticker.upper()}.csv', file_dir=save_dir)
         return daily_price
@@ -68,7 +68,8 @@ class MarketFetcher:
                 writer = csv.DictWriter(file, fieldnames=headers)
                 writer.writeheader()
                 for row in data:
-                    writer.writerow(dataclasses.asdict(row))
+                    formatted_record = {k: ('null' if v is None else v) for k, v in dataclasses.asdict(row).items()}
+                    writer.writerow(formatted_record)
         else:
             print("Skip file export due to empty data")
 
