@@ -94,12 +94,15 @@ def ftse_sti():
 
 
 # Taiwan
-# def tsec_weighted():
-#     strategies = FetcherStrategies(index_price=YahooSourceStrategy('^TWII'),
-#                                    constituents=TradingViewSourceStrategy('INDEX-NKY'),
-#                                    constituents_price=YahooSourceStrategy('^TWII',
-#                                                                           YahooSourceStrategy.get_ticker_formatter(
-#                                                                               suffix='.T')))
+def ftse_twse_taiwan_50():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('ftse_twse_taiwan_50_index',
+                                                                       '%Y-%m-%d'),
+                                   constituents=TradingViewSourceStrategy('FTSE-TW50'),
+                                   constituents_price=YahooSourceStrategy('^TSE50',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.TW')))
+    return MarketFetcher('ftse_twse_taiwan_50', strategies)
+
 
 if __name__ == '__main__':
-    nikkei_mid_small_cap().fetch()
+    ftse_twse_taiwan_50().fetch()
