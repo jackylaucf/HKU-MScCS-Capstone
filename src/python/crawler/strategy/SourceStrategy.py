@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from model.market_data import DailyPrice, IntradayPrice
-from typing import Callable, Union
+from typing import Callable
 
 
 class SourceStrategy(ABC):

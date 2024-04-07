@@ -64,6 +64,16 @@ def nikkei_mid_small_cap():
     return MarketFetcher('nikkei_mid_small_cap', strategies)
 
 
+def tse_growth_market_250():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('tse_growth_market_250',
+                                                                       '%m/%d/%Y'),
+                                   constituents=ImportCsvSourceStrategy('tse_growth_market_250'),
+                                   constituents_price=YahooSourceStrategy(None,
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.T')))
+    return MarketFetcher('tse_growth_market_250', strategies)
+
+
 # China
 def sse_composite():
     strategies = FetcherStrategies(index_price=YahooSourceStrategy('000001.SS'),
@@ -95,7 +105,7 @@ def ftse_sti():
 
 # Taiwan
 def ftse_twse_taiwan_50():
-    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('ftse_twse_taiwan_50_index',
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('ftse_twse_taiwan_50',
                                                                        '%Y-%m-%d'),
                                    constituents=TradingViewSourceStrategy('FTSE-TW50'),
                                    constituents_price=YahooSourceStrategy('^TSE50',
@@ -105,4 +115,4 @@ def ftse_twse_taiwan_50():
 
 
 if __name__ == '__main__':
-    ftse_twse_taiwan_50().fetch()
+    tse_growth_market_250().fetch()
