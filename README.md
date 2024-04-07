@@ -36,8 +36,8 @@ them along with the source code. This can help us view the data and prepare our 
 scattering around
 2. For the code modules, it is encouraged to (i) show the required steps about how to replicate your results; 
 (ii) any implementation details that worth readers' notice.
-3. To better manage this repository and avoid the headache of managing commit conflicts, the `main` branch will be 
-protected from direct code push. Please create and work on your own `feature` branch. When your works are done, please 
-raise a PR to merge your code to the `main` branch
+3. To better manage this repository and avoid the headache of managing commit conflicts, it is advised to create and 
+work on your own `feature` branch when you know someone else is also working on the same module. Branch protection
+is available to the paid users only on Github.
 3. Please keep the commit tree clean - preferably always rebase to the head of `main` before you push your `feature` 
 branch
