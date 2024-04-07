@@ -1,2 +1,5 @@
 **/.idea/*
 src/python/venv/*
+
+# notebook checkpoint file
+*-checkpoint.ipynb
