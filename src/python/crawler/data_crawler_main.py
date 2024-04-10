@@ -1,6 +1,8 @@
 from crawler.market_fetcher import FetcherStrategies, MarketFetcher, MarketDataType
+from crawler.strategy.BusinessInsiderSourceStrategy import BusinessInsiderSourceStrategy
 from crawler.strategy.ImportCsvSourceStrategy import ImportCsvSourceStrategy
 from crawler.strategy.NikkeiJPSourceStrategy import NikkeiJPSourceStrategy
+from crawler.strategy.SinaSourceStrategy import SinaSourceStrategy
 from crawler.strategy.TradingViewSourceStrategy import TradingViewSourceStrategy
 from crawler.strategy.YahooSourceStrategy import YahooSourceStrategy
 
@@ -42,6 +44,15 @@ def kosdaq_150():
                                                                           YahooSourceStrategy.get_ticker_formatter(
                                                                               suffix='.KQ', zfill=6)))
     return MarketFetcher('kosdaq_150', strategies)
+
+
+def kospi():
+    strategies = FetcherStrategies(index_price=YahooSourceStrategy('^KS11'),
+                                   constituents=TradingViewSourceStrategy('KRX-KOSPI'),
+                                   constituents_price=YahooSourceStrategy('^KS11',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.KS', zfill=6)))
+    return MarketFetcher('kospi', strategies)
 
 
 # Japan
@@ -93,6 +104,13 @@ def szse_component():
     return MarketFetcher('szse_component', strategies)
 
 
+def csi_100():
+    strategies = FetcherStrategies(index_price=BusinessInsiderSourceStrategy('2568851:SHA'),
+                                   constituents=SinaSourceStrategy('000903'),
+                                   constituents_price=YahooSourceStrategy('000903.SS'))
+    return MarketFetcher('csi_100', strategies)
+
+
 # Singapore
 def ftse_sti():
     strategies = FetcherStrategies(index_price=YahooSourceStrategy('^STI'),
@@ -115,4 +133,4 @@ def ftse_twse_taiwan_50():
 
 
 if __name__ == '__main__':
-    tse_growth_market_250().fetch()
+    csi_100().fetch()

@@ -37,6 +37,3 @@ class ImportCsvSourceStrategy(SourceStrategy):
                 if value:
                     results.append(value.strip())
             return results
-
-
-print(pathlib.Path(__file__).parents[4])
