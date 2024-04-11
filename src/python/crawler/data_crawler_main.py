@@ -111,6 +111,20 @@ def csi_100():
     return MarketFetcher('csi_100', strategies)
 
 
+def csi_1000():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('csi_1000'),
+                                   constituents=ImportCsvSourceStrategy('csi_1000'),
+                                   constituents_price=YahooSourceStrategy('000852.SS'))
+    return MarketFetcher('csi_1000', strategies)
+
+
+def chinext():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('chinext', '%m/%d/%Y'),
+                                   constituents=SinaSourceStrategy('399006'),
+                                   constituents_price=YahooSourceStrategy('399006.SZ'))
+    return MarketFetcher('chinext', strategies)
+
+
 # Singapore
 def ftse_sti():
     strategies = FetcherStrategies(index_price=YahooSourceStrategy('^STI'),
@@ -133,4 +147,4 @@ def ftse_twse_taiwan_50():
 
 
 if __name__ == '__main__':
-    csi_100().fetch()
+    chinext().fetch()

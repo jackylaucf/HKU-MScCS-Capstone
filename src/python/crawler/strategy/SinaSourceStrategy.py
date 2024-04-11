@@ -28,9 +28,9 @@ class SinaSourceStrategy(SourceStrategy):
         browser = webdriver.Chrome(options=browser_options)
         browser.get(url)
         constituents = []
-        parsed_html = BeautifulSoup(browser.page_source, 'html.parser')
-        table_element = parsed_html.find('table', {'id': 'NewStockTable'})
         while True:
+            parsed_html = BeautifulSoup(browser.page_source, 'html.parser')
+            table_element = parsed_html.find('table', {'id': 'NewStockTable'})
             for table_row in table_element.find('tbody').findAll('tr')[1:]:
                 href = table_row.find_all('td')[1].find('a')['href']
                 sina_stock_code = href.split('/')[-2]
@@ -45,6 +45,3 @@ class SinaSourceStrategy(SourceStrategy):
             except NoSuchElementException:
                 break
         return constituents
-
-
-print(SinaSourceStrategy('399903').get_constituents())
