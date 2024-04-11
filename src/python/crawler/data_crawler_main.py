@@ -1,6 +1,7 @@
 from crawler.market_fetcher import FetcherStrategies, MarketFetcher, MarketDataType
 from crawler.strategy.BusinessInsiderSourceStrategy import BusinessInsiderSourceStrategy
 from crawler.strategy.ImportCsvSourceStrategy import ImportCsvSourceStrategy
+from crawler.strategy.NSEIndiaSourceStrategy import NSEIndiaSourceStrategy
 from crawler.strategy.NikkeiJPSourceStrategy import NikkeiJPSourceStrategy
 from crawler.strategy.SinaSourceStrategy import SinaSourceStrategy
 from crawler.strategy.TradingViewSourceStrategy import TradingViewSourceStrategy
@@ -25,6 +26,34 @@ def nifty_50():
                                                                           YahooSourceStrategy.get_ticker_formatter(
                                                                               suffix='.NS')))
     return MarketFetcher('nifty_50', strategies)
+
+
+def nifty_midcap_100():
+    strategies = FetcherStrategies(index_price=YahooSourceStrategy('NIFTY_MIDCAP_100.NS'),
+                                   constituents=NSEIndiaSourceStrategy('niftymidcap100'),
+                                   constituents_price=YahooSourceStrategy('NIFTY_MIDCAP_100.NS',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.NS')))
+    return MarketFetcher('nifty_midcap_100', strategies)
+
+
+def nifty_smallcap_100():
+    strategies = FetcherStrategies(index_price=ImportCsvSourceStrategy('nifty_smallcap_100',
+                                                                       '%m/%d/%Y'),
+                                   constituents=NSEIndiaSourceStrategy('niftysmallcap100'),
+                                   constituents_price=YahooSourceStrategy('^CNXSC',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.NS')))
+    return MarketFetcher('nifty_smallcap_100', strategies)
+
+
+def nifty_100():
+    strategies = FetcherStrategies(index_price=YahooSourceStrategy('^CNX100'),
+                                   constituents=NSEIndiaSourceStrategy('nifty100'),
+                                   constituents_price=YahooSourceStrategy('^CNX100',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.NS')))
+    return MarketFetcher('nifty_100', strategies)
 
 
 # KOREA
@@ -147,4 +176,4 @@ def ftse_twse_taiwan_50():
 
 
 if __name__ == '__main__':
-    chinext().fetch()
+    nifty_100().fetch()

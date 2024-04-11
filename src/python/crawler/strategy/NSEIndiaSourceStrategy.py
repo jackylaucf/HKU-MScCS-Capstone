@@ -19,9 +19,9 @@ class NSEIndiaSourceStrategy(SourceStrategy):
                .format(ticker=self.index_ticker))
         constituents = []
         response = http_utils.get(url)
-        if response.ok:
-            print(response.text)
+        raw_data = response.text.split('\n')
+        ticker_col = raw_data[0].split(',').index('Symbol')
+        for row in raw_data[1:]:
+            if row.strip():
+                constituents.append(row.split(',')[ticker_col])
         return constituents
-
-
-NSEIndiaSourceStrategy('niftymidcap100').get_constituents()
