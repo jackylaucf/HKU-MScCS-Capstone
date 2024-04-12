@@ -82,7 +82,7 @@ The following table shows the concrete strategy classes that have been implement
 
 ### Crawler Implementation
 
-As the implementation various data scraping strategies are defined,  what is left to do is to define a general data 
+As the implementation of various data scraping strategies are defined,  what is left to do is to define a general data 
 scraping flow and configure different indices with their appropriate crawling strategies.
 
 The general data scraping flow is defined in the 
@@ -117,6 +117,4 @@ getting blacklisted on their website. In the [MarketFetcher](https://github.com/
 class, you can see we always let the thread sleep for 1 to 20 seconds (randomly) before we fire another requests.
 5. HTTP header spoofing is one of the useful techniques for data scraping. Some websites (like the NSE official page)
 check the `User-Agent` header and reject the requests from python crawler. Spoofing can be done to resolve such issue.
-See [http_utils.py](https://github.com/jackylaucf/HKU-MScCS-Capstone/tree/main/src/python/crawler)
-
-
+See [http_utils.py](https://github.com/jackylaucf/HKU-MScCS-Capstone/blob/main/src/python/crawler/http_utils.py)
