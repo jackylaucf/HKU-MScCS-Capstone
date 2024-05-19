@@ -138,7 +138,10 @@ def generate_ma_chart(
         _mid_step = (rawData[index + 1] - value) / 3
         _mid_1 = int((value + _mid_step - min) / _step)
         _mid_2 = int((value + _mid_step * 2 - min) / _step)
-        # midpoint would not be max
+        if _mid_1 == size: # -1 if its the maximum value
+            _mid_1 -= 1
+        if _mid_2 == size: # -1 if its the maximum value
+            _mid_2 -= 1
         data[_mid_1, index * 3 + 2] = color
         data[_mid_2, index * 3 + 3] = color
 
