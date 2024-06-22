@@ -83,6 +83,14 @@ def kospi():
                                                                               suffix='.KS', zfill=6)))
     return MarketFetcher('kospi', strategies)
 
+def kospi_100():
+    strategies = FetcherStrategies(index_price=YahooSourceStrategy('^KS100'),
+                                   constituents=TradingViewSourceStrategy('KRX-KOSPI100'),
+                                   constituents_price=YahooSourceStrategy('^KS100',
+                                                                          YahooSourceStrategy.get_ticker_formatter(
+                                                                              suffix='.KS', zfill=6)))
+    return MarketFetcher('kospi_100', strategies)
+
 
 # Japan
 def nikkei_225():
@@ -176,4 +184,4 @@ def ftse_twse_taiwan_50():
 
 
 if __name__ == '__main__':
-    nifty_100().fetch()
+    print(kospi_100().get_constituents())

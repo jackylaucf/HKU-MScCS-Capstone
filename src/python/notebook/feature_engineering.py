@@ -1,4 +1,5 @@
 import pandas as pd
+import numbers
 import numpy as np
 
 def add_return_data(
@@ -39,29 +40,17 @@ def add_return_data(
     return dataset
 
 
-def add_simple_moving_average(
-        raw_dataset: pd.DataFrame,
-        ma_days: int, # 50, 100, 200 or any value
-    ):
-    dataset = raw_dataset.copy()
-    queue = [] # an array storing last x day's value (if ma_days = 50, there will be 50 value in this array)
-    ma_values = []
-    for i in range(len(dataset)):
-        if (len(queue) < ma_days): 
-            # not enough data to calc the moving average
-            queue.append(dataset.iloc[i]['close'])
-            ma_values.append(None)
-            continue
-        # got enough data, start appending
-        ma_values.append(sum(queue) / ma_days)
-        # append current date's close value to queue
-        queue.append(dataset.iloc[i]['close'])
-        # pop the earliest record from queue
-        queue.pop(0)
-
-    dataset[f'ma_{ma_days}d'] = ma_values
-    
-    return dataset
+def add_simple_moving_average(raw_dataset: pd.DataFrame, ma_days: int):
+    ma = []
+    adj_close = raw_dataset.copy()['adj_close'].to_list()
+    for i, close_price in enumerate(adj_close):
+        if i < ma_days - 1:
+            ma.append(None)
+        else:
+            past_closes = list(filter(lambda x: bool(x) and isinstance(x, numbers.Number), adj_close[i+1-ma_days: i+1]))
+            ma.append(sum(past_closes)/len(past_closes))
+    raw_dataset['ma'] = ma
+    return raw_dataset
 
 # Function to generate daily ohlc chart
 # https://stackoverflow.com/questions/434583/what-is-the-fastest-way-to-draw-an-image-from-discrete-pixel-values-in-python
@@ -189,28 +178,14 @@ def generate_gap(
     return data
 
 # Function to generate one image data
-def generate_image_data(
-        dataset: pd.DataFrame,
-        ohlc_height: int,
-        volume_height: int, # set this to 0 if we don't want volume barchart
-        gap_height: int, # set this to 0 if we don't want volume barchart
-        include_ma_50d = False,
-        include_ma_100d = False,
-        include_ma_200d = False,
-    ) -> np.ndarray:
+def generate_image_data(dataset: pd.DataFrame, ohlc_height: int, volume_height: int, gap_height: int) -> np.ndarray:
     data = []
     _chart_min = float(dataset.min()['low'])
     _chart_max = float(dataset.max()['high'])
     # check ma's min max
-    if include_ma_50d:
-        _chart_min = min(_chart_min, float(dataset.min()['ma_50d']))
-        _chart_max = max(_chart_max, float(dataset.max()['ma_50d']))
-    if include_ma_100d:
-        _chart_min = min(_chart_min, float(dataset.min()['ma_100d']))
-        _chart_max = max(_chart_max, float(dataset.max()['ma_100d']))
-    if include_ma_200d:
-        _chart_min = min(_chart_min, float(dataset.min()['ma_200d']))
-        _chart_max = max(_chart_max, float(dataset.max()['ma_200d']))
+    if 'ma' in dataset:
+        _chart_min = min(_chart_min, float(dataset.min()['ma']))
+        _chart_max = max(_chart_max, float(dataset.max()['ma']))
     for index, row in dataset.iterrows():
         _ohlc = generate_daily_ohlc_chart(
             ohlc_height,
@@ -237,54 +212,22 @@ def generate_image_data(
             _data = np.concatenate([_ohlc, _gap, _volume], axis=0)
             data.append(_data)
 
-    imgData = np.concatenate(data, axis=1)
-
-    # add 50d_ma
-    if include_ma_50d:
-        _ma_50d = generate_ma_chart(
-            ohlc_height, # height
+    img_data = np.concatenate(data, axis=1)
+    if 'ma' in dataset:
+        _ma = generate_ma_chart(
+            ohlc_height,
             _chart_min,
             _chart_max,
-            dataset['ma_50d'].tolist()
+            dataset['ma'].tolist()
         )
         _ma_gap = generate_gap(
             volume_height + gap_height,
             len(dataset.index) * 3
         )
-        ma_50d_imgData = np.concatenate([_ma_50d, _ma_gap], axis=0)
-        imgData = merge_image(imgData, ma_50d_imgData)
-
-    # add 100d_ma
-    if include_ma_100d:
-        _ma_100d = generate_ma_chart(
-            ohlc_height, # height
-            _chart_min,
-            _chart_max,
-            dataset['ma_100d'].tolist()
-        )
-        _ma_gap = generate_gap(
-            volume_height + gap_height,
-            len(dataset.index) * 3
-        )
-        ma_100d_imgData = np.concatenate([_ma_100d, _ma_gap], axis=0)
-        imgData = merge_image(imgData, ma_100d_imgData)
-
-    # add 200d_ma
-    if include_ma_200d:
-        _ma_200d = generate_ma_chart(
-            ohlc_height, # height
-            _chart_min,
-            _chart_max,
-            dataset['ma_200d'].tolist()
-        )
-        _ma_gap = generate_gap(
-            volume_height + gap_height,
-            len(dataset.index) * 3
-        )
-        ma_200d_imgData = np.concatenate([_ma_200d, _ma_gap], axis=0)
-        imgData = merge_image(imgData, ma_200d_imgData)
+        ma_img_data = np.concatenate([_ma, _ma_gap], axis=0)
+        img_data = merge_image(img_data, ma_img_data)
         
-    return imgData
+    return img_data
 
 # Function to merge two image data
 # if one of the pixel is 255 -> return 255
