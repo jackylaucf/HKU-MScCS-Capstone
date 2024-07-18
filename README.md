@@ -24,10 +24,13 @@ This is a Github repository for recording and demonstrating our project team's r
 
 | Folder    | Purpose                                                       |
 |-----------|---------------------------------------------------------------|
-| dataset   | Commonly shared resources for data analysis & model training. |
-| documents | All the working documents completed by the team members.      |
+| dataset   | - Commonly shared resources for data analysis, model training & portfolio construction <br> - There are three main subfolder: market_data, ohlc_graphs and returns <br> - market_data stores the stock and index prices data that are crawled from various sources <br> - ohlc_graphs stores the OHLC graphs generated for the CNN model training <br> - returns stores the calculated stock return over different time horizon in form of python pickle files <br> - Due to the large number and size of image data, only market_data and returns folders are pushed to Github. <br> - For data in ohlc_graphs, you will need to execute the code in https://github.com/jackylaucf/HKU-MScCS-Capstone/blob/main/src/python/notebook/ohlc_ma_demo.ipynb
 | src       | Source codes. (src/{programming_language})                    |
 
+---
+
+
+** Guideline for reproducing the results
 ---
 
 **Notice**
