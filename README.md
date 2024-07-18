@@ -30,7 +30,18 @@ This is a Github repository for recording and demonstrating our project team's r
 ---
 
 
-** Guideline for reproducing the results
+**Guideline for reproducing the results**
+
+*(A) Crawler*
+
+To run the data crawler, you will need to execute https://github.com/jackylaucf/HKU-MScCS-Capstone/blob/main/src/python/crawler/data_crawler_main.py. 
+
+The enviornment setup can be found in another README.md file (https://github.com/jackylaucf/HKU-MScCS-Capstone/blob/main/src/python/crawler/README.md)
+
+*(B) Data preparation & cleansing*
+
+
+
 ---
 
 **Notice**
