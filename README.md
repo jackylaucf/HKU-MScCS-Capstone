@@ -52,6 +52,12 @@ The enviornment setup can be found in another README.md file (https://github.com
 
 *(D) Portfolio construction & backtesting*
 
+1. portfolio.ipynb: Conduct predictions on the image dataset using the trained model, and return a source file that contains all the prediction probabilities and actual return value.
+2. portfolio_analysis.ipynb: Iterate the source obtained from portfolio.ipynb and calculate the final result based on the two trading strategies: long-short and long-only. The capital data on each rebalancing will be stored in a csv and a time series chart will be generated.
+3. index_adjust_analysis.ipynb: Further analysis on long-only strategy result that adjusting the final return by the index value. A time series chart with three data - portfolio; index value; adjusted portfolio, will be generated.
+4. heatmap.ipynb: This will load the result from portfolio_analysis.ipynb and generate a heatmap based on the final capital and the final percentage of return for different trading strategies.
+5. return_histogram.ipynb: This will load the portfolio analysis result and count the return value for each rebalancing timestamp. A histogram of portfolio return distribution will be generated.
+
 ---
 
 **Notice**
