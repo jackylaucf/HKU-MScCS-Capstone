@@ -30,6 +30,7 @@ This is a Github repository for recording and demonstrating our project team's r
 ---
 
 
+<<<<<<< Updated upstream
 **Guideline for reproducing the results**
 
 *(A) Crawler*
@@ -42,6 +43,9 @@ The enviornment setup can be found in another README.md file (https://github.com
 
 
 
+=======
+** Guideline for reproducing the results
+>>>>>>> Stashed changes
 ---
 
 **Notice**
