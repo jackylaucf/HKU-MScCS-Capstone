@@ -47,8 +47,10 @@ The enviornment setup can be found in another README.md file (https://github.com
 
 *(C) Model Training*
 
-1. training_space.ipynb: Split the image data into model training, model testing, as well as the portfolio backtesting set. The output will be stored in the training folder at the project root.
-2. 
+1. training_space.ipynb: Split the image data into model training, model testing, as well as the portfolio backtesting set. Data will also be splitted based on its class label. The output will be stored in the training folder at the project root.
+2. cnn_model.ipynb: Define and train the CNN model. Model evaluation by the test set will also be done in this notebook
+
+*(D) Portfolio construction & backtesting*
 
 ---
 
