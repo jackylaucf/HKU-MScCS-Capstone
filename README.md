@@ -25,12 +25,13 @@ This is a Github repository for recording and demonstrating our project team's r
 | Folder    | Purpose                                                       |
 |-----------|---------------------------------------------------------------|
 | dataset   | - Commonly shared resources for data analysis, model training & portfolio construction <br> - There are three main subfolder: market_data, ohlc_graphs and returns <br> - market_data stores the stock and index prices data that are crawled from various sources <br> - ohlc_graphs stores the OHLC graphs generated for the CNN model training <br> - returns stores the calculated stock return over different time horizon in form of python pickle files <br> - Due to the large number and size of image data, only market_data and returns folders are pushed to Github. <br> - For data in ohlc_graphs, you will need to execute the code in https://github.com/jackylaucf/HKU-MScCS-Capstone/blob/main/src/python/notebook/ohlc_ma_demo.ipynb
-| src       | Source codes. (src/{programming_language})                    |
+| src       | - Python source codes                 |
+| training  | - The space for training the CNN model <br> - It contains the labelled OHLC images before 2014-04-01, the training checkpoint files and log files <br> Due to large amount of data, the files are not pushed to the Github |
+| portfolio | - It contains the OHLC images since 2014-04-01 for portfolio construction <br> - The portfolio output files will be stored here <br> Due to large amount of data, the files are not pushed to the Github |
 
 ---
 
 
-<<<<<<< Updated upstream
 **Guideline for reproducing the results**
 
 *(A) Crawler*
@@ -41,11 +42,14 @@ The enviornment setup can be found in another README.md file (https://github.com
 
 *(B) Data preparation & cleansing*
 
+1. ohlc_ma_demo.ipynb: Generate the OHLC graphs, which will be stored under dataset/ohlc_graphs folder
+2. market_data_analysis: Generate the stock returns and store under dataset/returns folder in form of python pickle files. It also calculates the distribution of each stock's return
 
+*(C) Model Training*
 
-=======
-** Guideline for reproducing the results
->>>>>>> Stashed changes
+1. training_space.ipynb: Split the image data into model training, model testing, as well as the portfolio backtesting set. The output will be stored in the training folder at the project root.
+2. 
+
 ---
 
 **Notice**
